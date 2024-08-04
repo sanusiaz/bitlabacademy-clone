@@ -1,0 +1,21 @@
+img.badge-gray {
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+img.badge-extra-small {
+	height:24px;
+}
+
+img.badge-small {
+	height:36px;
+}
+
+img.badge-medium {
+	height:48px;
+}
+
+img.badge-large {
+	height:64px;
+}

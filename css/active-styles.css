@@ -1,0 +1,748 @@
+/*  MICROTHEMER STYLES  */
+
+/*= Animations ================ */
+
+@-webkit-keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+/*= Course Overview Page ====== */
+
+/** Course Overview Page >> D grid [type="button"] **/
+.d-grid [type="button"] {
+	background-color: var(--o-brand) !important;
+}
+
+/** Course Overview Page >> WCheading50293 **/
+.accordian-header {
+	background-color: var(--o-brand);
+}
+
+/** Course Overview Page >> CourseAccordion accordion button **/
+#courseAccordion .accordion-button {
+	background-color: var(--o-brand) !important;
+}
+
+/** Course Overview Page >> Wishlist courses wrap wc header **/
+.wishlist-courses-wrap .wc-header {
+	background-color: transparent;
+}
+
+/** Course Overview Page >> Wishlist courses wrap wc course info bar container **/
+.wishlist-courses-wrap .wc-course-info-bar-container {
+	background-color: transparent;
+}
+
+/** Course Overview Page >> Wishlist courses wrap wc course details container **/
+.wishlist-courses-wrap .wc-course-details-container {
+	background-color: transparent;
+	min-height: 100vh;
+}
+
+/** Course Overview Page >> CourseAccordion accordion item **/
+#courseAccordion .accordion-item {
+	background-color: inherit;
+}
+#courseAccordion ol::before {
+	display: none;
+}
+#courseAccordion li::before {
+	display: none;
+}
+#courseAccordion .wc-lesson-timeline-badge-icon {
+	background-color: var(--o-brand);
+}
+
+/** Course Overview Page >> CourseAccordion link **/
+#courseAccordion a {
+	font-family: Raleway !important;
+	color: var(--o-text-1) !important;
+}
+#courseAccordion a:hover {
+	font-family: Raleway !important;
+	color: var(--o-brand)!important;
+}
+
+/** Course Overview Page >> Col lg 5 wc sidebar **/
+.wc-sidebar {
+	background-color: inherit !important;
+}
+.wc-sidebar a, 
+p, 
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+strong {
+	color: var(--o-text-2);
+}
+.wc-title {
+	color: var(--o-text-2) !important;
+}
+
+/** Course Overview Page >> Wc lesson content breadcrumb active **/
+.wc-lesson-content-breadcrumb .active {
+	color: var(--o-brand) !important;
+}
+
+/** Course Overview Page >> H 100 wc sticky **/
+.wc-sticky {
+	background-color: inherit !important;
+	margin-top: 5px;
+	position: static !important;
+}
+
+/** Course Overview Page >> D flex wc leftside menu **/
+.wc-leftside-menu {
+	background-color: inherit !important;
+	display: none;
+}
+
+/** Course Overview Page >> Wc leftside menu justify content between +1 more **/
+.wc-leftside-menu .justify-content-between, 
+.wc-leftside-menu .wc-leftside-menu-top {
+	background-color: var(--o-brand);
+	position: static !important;
+	display: none;
+}
+
+/** Course Overview Page >> Wc lesson marker incomplete justify content center **/
+.wc-lesson-marker-incomplete {
+	background-color: var(--o-brand-gr) !important;
+}
+
+/** Course Overview Page >> Wc btn next prev light d lg inline **/
+.wc-btn-next-prev-light {
+	color: var(--o-text-2) !important;
+}
+
+/** Course Overview Page >> Wc btn next prev light wc icon arrow right (::before) **/
+.wc-btn-next-prev-light .wc-icon-arrow-right::before {
+	color: var(--o-text-1);
+	background-color: var(--o-brand);
+	border-radius: 50%;
+}
+
+/** Course Overview Page >> Div (#2) link **/
+.wc-lesson-lessons-menu a {
+	color: var(--o-text-1) !important;
+}
+
+/** Course Overview Page >> Wc lesson lessons menu list item (:hover) **/
+.wc-lesson-lessons-menu li:hover {
+	background-color: var(--o-brand) !important;
+}
+
+/** Course Overview Page >> Head meta (#1) **/
+.offcanvas-body {
+	display: none;
+}
+#offcanvasLessonLabelLesson {
+	display: none;
+}
+
+
+/*= my-account ================ */
+
+/** my-account >> Div (#1) wfls block content **/
+.wfls-block > div {
+	background-color: var(--o-surface-1);
+}
+
+/** my-account >> Add payment method **/
+#add_payment_method {
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto auto;
+}
+
+/** my-account >> Mtp 50012 woocommerce MyAccount content **/
+.mtp-50012 .woocommerce-MyAccount-content {
+	background-color: transparent;
+}
+
+/** my-account >> Mtp 50012 change payment method **/
+.mtp-50012 a.button {
+	margin-inline: 0.1em;
+}
+
+/** my-account >> Woocommerce table order details table row **/
+.mtp-50012 .woocommerce-table--order-details :is(tr, strong) {
+	background-color: #000;
+}
+
+/** my-account >> Page template defaultmtp 50012 woocommerce MyAccount navigation link courses **/
+.page-template-default.mtp-50012 .woocommerce-MyAccount-navigation {
+	background-color: transparent;
+}
+
+/** my-account >> Brxe bklwnz **/
+#brxe-bklwnz {
+	background-image: none;
+}
+#brxe-bklwnz span {
+	color: var(--o-brand);
+}
+
+/** my-account >> Smooth content wishlist courses wrap **/
+.wishlist-courses-wrap {
+	font-family: Roboto !important;
+}
+.card-body {
+	font-family: Roboto !important;
+}
+.card-body h3 {
+	font-family: Raleway !important;
+}
+.wishlist-courses-wrap input, 
+.wishlist-courses-wrap button, 
+.wishlist-courses-wrap select, 
+.wishlist-courses-wrap optgroup, 
+.wishlist-courses-wrap textarea {
+	font-family: Roboto !important;
+}
+.wc-excerpt {
+	font-family: Roboto !important;
+}
+#smooth-content .btn-outline-primary {
+	font-family: Raleway !important;
+}
+.wc-heading-title {
+	font-family: Raleway !important;
+}
+
+/** my-account >> Hydrated has payment method selected payment method stripemtp 50011 **/
+.hydrated .mtp-50011 label input {
+	color: rgb(0, 0, 0);
+}
+
+/** my-account >> Mtp 50012 u column1 **/
+.mtp-50012 .u-column1 {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+/** my-account >> Mtp 50012 woocommerce form login submit **/
+.mtp-50012 .woocommerce-form-login__submit {
+	background-color: var(--o-brand) !important;
+}
+
+
+/*= Course list page ========== */
+
+/** Course list page >> Search Form Course Page **/
+.mtp-50022 #smooth-content .p-2 {
+	display: none !important;
+}
+
+/** Course list page >> Course list holder wc icon container **/
+#course-list-holder .wc-icon-container {
+	display: none;
+}
+
+/** Course list page >> Wc course list wc filter bar **/
+.wc-course-list .wc-filter-bar {
+	background-color: transparent;
+}
+
+/** Course list page >> Div (#1) link **/
+#course-list-holder .btn-primary {
+	background-color: var(--o-brand);
+}
+
+/** Course list page >> Wc search box btn archive search **/
+.wc-search-box .btn-archive-search {
+	background-color: var(--o-brand) !important;
+}
+
+/** Course list page >> Course list holder wc course info content exc **/
+#course-list-holder .wc-course-info-content-exc {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+}
+
+/** Course list page >> Div (#2) align items center **/
+#course-list-holder .align-items-center {
+	background-color: var(--o-brand) !important;
+}
+
+/** Course list page >> Div (#1) heading 3 **/
+#course-list-holder h3 {
+	color: var(--o-brand-10);
+}
+
+/** Course list page >> Py 5 paragraph (#2) **/
+.py-5 p:nth-of-type(2) {
+	color: #fff;
+	font-weight: bold;
+	text-shadow: -1px -1px 3px rgb(0, 0, 0);
+}
+
+
+/*= Course-Lessons ============ */
+
+/** Course-Lessons >> wc lesson content area **/
+.wc-lesson-content-area {
+	display: grid;
+	justify-items: start;
+}
+.wc-lesson-content-area :is(
+p, h1, h2, h3, h4, h5, h6
+) {
+	min-width: 60%;
+}
+.wc-icon-play_arrow::before {
+	content: "";
+	display: inline-block;
+	background-image: url('../images/video-lesson-color.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 1.5em;
+	height: 2.25em;
+}
+.wc-icon-quiz::before {
+	content: "";
+	display: inline-block;
+	background-image: url('../images/quiz-icon-color.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 1.25em;
+	height: 1.25em;
+}
+
+/** Course-Lessons >> D grid btn outline **/
+.d-grid .btn-outline {
+	color: #fff !important;
+	font-size: 0.7em;
+	background-color: transparent !important;
+}
+
+/** Course-Lessons >> Wc lesson lessons menu wc duration **/
+.wc-lesson-lessons-menu .wc-duration {
+	color: var(--o-text-1) !important;
+}
+
+
+/*= fluid Checkout Page ======= */
+
+/** fluid Checkout Page >> Select2 billing country container **/
+.mtp-50011 #select2-billing_country-container li {
+	color: black !important;
+}
+
+/** fluid Checkout Page >> Select2 billing country results **/
+.mtp-50011 #select2-billing_country-results ul, 
+.mtp-50011 #select2-billing_country-results li, 
+.mtp-50011 .select2-search__field {
+	color: black !important;
+}
+.mtp-50011 #select2-billing_state-results ul, 
+.mtp-50011 #select2-billing_state-results li {
+	color: black !important;
+}
+.mtp-50011 body {
+	color: #000!important;
+	text-transform: none;
+	font-size: var(--o-fluid-font);
+	font-family: "Roboto";
+}
+
+/** fluid Checkout Page >> Mtp 50011 fc checkout order review inner **/
+.mtp-50011 .fc-checkout-order-review__inner bdi {
+	color: black !important;
+}
+
+/** fluid Checkout Page >> Fc login form inner **/
+.mtp-50011 .fc-login-form__inner label, 
+.mtp-50011 .fc-login-form__inner input, 
+.mtp-50011 .fc-login-form__inner a {
+	color: black;
+}
+
+/** fluid Checkout Page >> Form input +2 more **/
+.fc-wrapper form input, 
+.fc-wrapper span, 
+.fc-wrapper label, 
+.fc-wrapper label {
+	color: black !important;
+}
+.fc-wrapper ::placeholder {
+	/* Standard */
+	color: blue;
+	opacity: 0.4;
+}
+
+/** fluid Checkout Page >> Payment fc payment methods wrapper **/
+#payment {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-align-content: center;
+	align-content: center;
+	-webkit-align-self: center;
+	align-self: center;
+	display: grid;
+}
+
+/** fluid Checkout Page >> Has payment method selected payment method stripe fc checkout header **/
+.fc-checkout-header {
+	background-color: transparent;
+}
+
+/** fluid Checkout Page >> Place order **/
+#place_order {
+	background-color: var(--o-brand-hover);
+	min-width: 200px;
+	border-radius: 8px;
+	margin-block: 1em;
+}
+
+/** fluid Checkout Page >> Fc wrapper fc place order section main **/
+#fc-wrapper {
+	color: var(--o-brand-900);
+}
+
+/** fluid Checkout Page >> Fc wrapper woocommerce form label for checkbox **/
+#fc-wrapper .woocommerce-form__label-for-checkbox {
+	color: red;
+}
+
+/** fluid Checkout Page >> Place order (:hover) **/
+#place_order:hover {
+	transform: scale(1.1, 1.1);
+	-o-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+/** fluid Checkout Page >> Mtp 50011 mcc **/
+.mcc input, 
+.mcc label, 
+.mcc a, 
+.mcc p, 
+.mcc h2 {
+	color: black !important;
+}
+
+/** fluid Checkout Page >> Mtp 50011 woocommerce orders table cell order number **/
+.mtp-50011 .woocommerce-order-details th, 
+.mtp-50011 .woocommerce-order-details td {
+	color: black;
+}
+.mtp-50011 .woocommerce-orders-table__cell-order-number a {
+	color: var(--o-text-1);
+}
+
+/** fluid Checkout Page >> Mtp 50011 woocommerce orders table cell subscription status **/
+.mtp-50011 .woocommerce-table__product-name, 
+.mtp-50011 .woocommerce-table__product-total {
+	color: black !important;
+	background-color: var(--o-surface-5);
+}
+.mtp-50011 .woocommerce-orders-table__cell-order-number a, 
+.mtp-50011 bdi, 
+.mtp-50011 strong, 
+.mtp-50011 .product-name a, 
+.mtp-50011 .woocommerce-orders-table__cell-subscription-status, 
+.mtp-50011 .woocommerce-orders-table__cell-subscription-total {
+	color: var(--o-brand)!important;
+}
+
+/** fluid Checkout Page >> Mtp 50011 brxe qnxczj **/
+.mtp-50011 #brxe-qnxczj {
+	-webkit-align-content: center;
+	align-content: center;
+}
+
+/** fluid Checkout Page >> Mtp 50011 brxe gmfyfz **/
+.mtp-50011 #brxe-gmfyfz {
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-align-content: center;
+	align-content: center;
+}
+
+/** fluid Checkout Page >> Woocommerce checkoutmtp 50011 **/
+.hydrated .woocommerce-checkout.mtp-50011 {
+	color: black !important;
+}
+
+
+/*= QUIZ ====================== */
+
+/** QUIZ >> Quiz page label (#1) **/
+.quiz-page label {
+	color: var(--o-text-1);
+	background-color: var(--o-surface-4) !important;
+	min-width: 600px;
+	padding: 0.5rem;
+	margin-top: 1rem;
+	border-radius: 8px;
+	display: block;
+}
+.quiz-page .wlq-answer-select {
+	margin: 1rem;
+}
+
+/** QUIZ >> Div (#1) horizontal rule **/
+#wl-quiz hr {
+	display: none;
+}
+
+/** QUIZ >> Quiz nav left btn primary **/
+.quiz-nav-left .btn-primary {
+	background-color: var(--o-brand) !important;
+}
+
+/** QUIZ >> Quiz nav right btn primary **/
+.quiz-nav-right .btn-primary {
+	background-color: var(--o-brand) !important;
+}
+
+/** QUIZ >> Quiz page strong **/
+.quiz-page strong {
+	font-size: 1.5rem;
+	padding-bottom: 1rem;
+}
+
+/** QUIZ >> Quiz submit btn **/
+.quiz-submit .btn {
+	background-color: rgb(0, 128, 0) !important;
+}
+
+/** QUIZ >> Div results page link **/
+.div-results-page a {
+	color: var(--o-brand);
+}
+
+/** QUIZ >> Wlq2warning2 **/
+.wlq2warning2 {
+	background-color: transparent;
+	padding: 1em;
+}
+
+/** QUIZ >> Div results page link (:hover) **/
+.div-results-page a:hover {
+	color: var(--o-text-1);
+}
+
+
+/*= Woocommerce - Products Page = */
+
+/** Woocommerce - Products Page >> Brx content product **/
+.mtp-18948 #brx-content .product {
+	max-width: 90%;
+	-webkit-justify-content: center !important;
+	justify-content: center !important;
+	-webkit-align-content: space-between !important;
+	align-content: space-between !important;
+	display: grid;
+	grid-column-gap: 2em;
+	column-gap: 2em;
+	grid-row-gap: 2em;
+	row-gap: 2em;
+	-webkit-align-content: stretch !important;
+	align-content: stretch !important;
+	justify-items: normal !important;
+}
+.mtp-18948 #brx-content .product > :nth-child(1) {
+	grid-area: 1 / 1 / 2 / 3;
+	justify-self: center;
+	-webkit-align-self: center;
+	align-self: center;
+}
+.mtp-18948 #brx-content .product > :nth-child(2) {
+	grid-area: 2 / 1 / 3 / 2;
+	-webkit-align-self: end;
+	align-self: end;
+	margin-block: 1em;
+}
+
+/** Woocommerce - Products Page >> Brx content brxe container **/
+.mtp-18948 #brx-content .brxe-container {
+	padding-inline: 50px;
+}
+
+/** Woocommerce - Products Page >> WCcollapse51474 wc heading **/
+#wCcollapse51474 .wc-heading {
+	color: var(--o-bw);
+}
+
+/** Woocommerce - Products Page >> Mtp 18948 attachment woocommerce thumbnail **/
+.mtp-18948 .attachment-woocommerce_thumbnail {
+	width: 100px !important;
+	height: 100px !important;
+	box-sizing: border-box;
+	object-fit: contain !important;
+	-webkit-animation-name: bounceIn;
+	animation-name: bounceIn;
+	-webkit-animation-duration: 0.8s;
+	animation-duration: 0.8s;
+}
+
+/** Woocommerce - Products Page >> Mtp 18948 woocommerce loop product title **/
+.mtp-18948 .woocommerce-loop-product__title {
+	max-width: 255px !important;
+}
+
+/** Woocommerce - Products Page >> Form row paragraph **/
+.mtp-50011 .form-row p {
+	color: black !important;
+}
+
+
+/*( < 1200 )*/
+@media (max-width: 1199.98px) {
+	/** Woocommerce - Products Page >> Brx content product **/
+	.mtp-18948 #brx-content .product {
+	display: grid;
+	grid-row-gap: 10px;
+	row-gap: 10px;
+}
+.mtp-18948 #brx-content .product > :nth-child(2) {
+	grid-area: 2 / 1 / 3 / 2;
+}
+.mtp-18948 #brx-content .product > :nth-child(3) {
+	grid-area: 3 / 1 / 4 / 2;
+}
+
+}
+
+
+/*( < 980 )*/
+@media (max-width: 979.98px) {
+	/** Course Overview Page >> Wc lesson container wc leftside menu btm **/
+	.wc-lesson-container .wc-leftside-menu-btm {
+	background-color: var(--o-brand);
+}
+
+	/** fluid Checkout Page >> Mtp 50011 fc checkout cart link **/
+	.mtp-50011 .fc-checkout__cart-link {
+	color: black !important;
+}
+.mtp-50011 .fc-checkout__cart-link strong {
+	color: black!important;
+}
+
+}
+
+
+/*( < 768 )*/
+@media (max-width: 767.98px) {
+	/** Course-Lessons >> D lg none module nav label **/
+	.d-lg-none .module-nav-label {
+	color: transparent !important;
+}
+
+}
+
+
+/*( < 480 )*/
+@media (max-width: 479.98px) {
+	/** Woocommerce - Products Page >> Brx content product **/
+	.mtp-18948 #brx-content .product {
+	display: grid;
+}
+.mtp-18948 #brx-content .product > :nth-child(2) {
+	grid-area: 2 / 1 / 3 / 3;
+}
+
+}
+

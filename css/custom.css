@@ -1,0 +1,84 @@
+
+/*[ === HOME PAGE STYLING START === ]*/
+.loading {
+    background: white !important;
+    display: none;
+}
+
+.video_wrapper {
+    position: relative !important;
+}
+
+.video_wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+}
+
+.video_wrapper .controls {
+    position: absolute;
+    top: calc(50% - 100px / 2);
+    left: calc(50% - 100px / 2);
+    right: 0px;
+    bottom: 0px;
+    z-index: 999;
+
+}
+
+.video_wrapper video {
+    position: relative;
+}
+
+.video_wrapper::after {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(124, 112, 104, 0.489);
+    content: '';
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.video_wrapper .controls .play, .video_wrapper .controls .pause {
+    height: 100px;
+    width: 100px;
+    background-color: #BA6D1F;
+    color: white;
+    border: 4px solid white;
+    border-radius: 50%;
+    position: relative;
+    transition: all;
+    duration: 200;
+}
+
+.video_wrapper .controls .play:hover, .video_wrapper .controls .pause:hover {
+    transition: all;
+    duration: 200;
+    background-color: #b8834e;
+    cursor: pointer;
+}
+
+.video_wrapper .controls svg {
+    stroke: white;
+    height: 40px;
+    position: absolute;
+    top: calc( 50% - 40px / 2 );
+    left: calc( 50% - 40px);
+    bottom: 0px;
+}
+
+#our_services {
+    background-color: white !important;
+}
+
+.text-black {
+    color: black !important;
+    fill: black;
+}
+
+
+/*[ === HOME PAGE STYLING END === ]*/
