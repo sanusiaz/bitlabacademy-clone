@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" color-scheme="dark" style="--bricks-vh: 3.97px;">
 
 <head>
     <meta charset="UTF-8">
@@ -11,435 +10,10 @@
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#f73131">
     <!-- End OxyProps Meta -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="alternate" type="application/rss+xml" title="BitLab Academy » Feed"
-        href="https://bitlabacademy.com/feed/">
-    <link rel="alternate" type="application/rss+xml" title="BitLab Academy » Comments Feed"
-        href="https://bitlabacademy.com/comments/feed/">
+    <script async=""
+        src="https://chimpstatic.com/mcjs-connected/js/users/e51a046ba425d4c220b33bc36/bae0c5d2d797aea337f307dea.js"></script>
     <script async="" src="js/bae0c5d2d797aea337f307dea.js"></script>
-    <script>
-        window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/", "svgExt": ".svg", "source": { "wpemoji": "https:\/\/bitlabacademy.com\/wp-includes\/js\/wp-emoji.js?ver=6.6.1", "twemoji": "https:\/\/bitlabacademy.com\/wp-includes\/js\/twemoji.js?ver=6.6.1" } };
-        /**
-         * @output wp-includes/js/wp-emoji-loader.js
-         */
-
-        /**
-         * Emoji Settings as exported in PHP via _print_emoji_detection_script().
-         * @typedef WPEmojiSettings
-         * @type {object}
-         * @property {?object} source
-         * @property {?string} source.concatemoji
-         * @property {?string} source.twemoji
-         * @property {?string} source.wpemoji
-         * @property {?boolean} DOMReady
-         * @property {?Function} readyCallback
-         */
-
-        /**
-         * Support tests.
-         * @typedef SupportTests
-         * @type {object}
-         * @property {?boolean} flag
-         * @property {?boolean} emoji
-         */
-
-        /**
-         * IIFE to detect emoji support and load Twemoji if needed.
-         *
-         * @param {Window} window
-         * @param {Document} document
-         * @param {WPEmojiSettings} settings
-         */
-        (function wpEmojiLoader(window, document, settings) {
-            if (typeof Promise === 'undefined') {
-                return;
-            }
-
-            var sessionStorageKey = 'wpEmojiSettingsSupports';
-            var tests = ['flag', 'emoji'];
-
-            /**
-             * Checks whether the browser supports offloading to a Worker.
-             *
-             * @since 6.3.0
-             *
-             * @private
-             *
-             * @returns {boolean}
-             */
-            function supportsWorkerOffloading() {
-                return (
-                    typeof Worker !== 'undefined' &&
-                    typeof OffscreenCanvas !== 'undefined' &&
-                    typeof URL !== 'undefined' &&
-                    URL.createObjectURL &&
-                    typeof Blob !== 'undefined'
-                );
-            }
-
-            /**
-             * @typedef SessionSupportTests
-             * @type {object}
-             * @property {number} timestamp
-             * @property {SupportTests} supportTests
-             */
-
-            /**
-             * Get support tests from session.
-             *
-             * @since 6.3.0
-             *
-             * @private
-             *
-             * @returns {?SupportTests} Support tests, or null if not set or older than 1 week.
-             */
-            function getSessionSupportTests() {
-                try {
-                    /** @type {SessionSupportTests} */
-                    var item = JSON.parse(
-                        sessionStorage.getItem(sessionStorageKey)
-                    );
-                    if (
-                        typeof item === 'object' &&
-                        typeof item.timestamp === 'number' &&
-                        new Date().valueOf() < item.timestamp + 604800 && // Note: Number is a week in seconds.
-                        typeof item.supportTests === 'object'
-                    ) {
-                        return item.supportTests;
-                    }
-                } catch (e) { }
-                return null;
-            }
-
-            /**
-             * Persist the supports in session storage.
-             *
-             * @since 6.3.0
-             *
-             * @private
-             *
-             * @param {SupportTests} supportTests Support tests.
-             */
-            function setSessionSupportTests(supportTests) {
-                try {
-                    /** @type {SessionSupportTests} */
-                    var item = {
-                        supportTests: supportTests,
-                        timestamp: new Date().valueOf()
-                    };
-
-                    sessionStorage.setItem(
-                        sessionStorageKey,
-                        JSON.stringify(item)
-                    );
-                } catch (e) { }
-            }
-
-            /**
-             * Checks if two sets of Emoji characters render the same visually.
-             *
-             * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
-             * scope. Everything must be passed by parameters.
-             *
-             * @since 4.9.0
-             *
-             * @private
-             *
-             * @param {CanvasRenderingContext2D} context 2D Context.
-             * @param {string} set1 Set of Emoji to test.
-             * @param {string} set2 Set of Emoji to test.
-             *
-             * @return {boolean} True if the two sets render the same.
-             */
-            function emojiSetsRenderIdentically(context, set1, set2) {
-                // Cleanup from previous test.
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                context.fillText(set1, 0, 0);
-                var rendered1 = new Uint32Array(
-                    context.getImageData(
-                        0,
-                        0,
-                        context.canvas.width,
-                        context.canvas.height
-                    ).data
-                );
-
-                // Cleanup from previous test.
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                context.fillText(set2, 0, 0);
-                var rendered2 = new Uint32Array(
-                    context.getImageData(
-                        0,
-                        0,
-                        context.canvas.width,
-                        context.canvas.height
-                    ).data
-                );
-
-                return rendered1.every(function (rendered2Data, index) {
-                    return rendered2Data === rendered2[index];
-                });
-            }
-
-            /**
-             * Determines if the browser properly renders Emoji that Twemoji can supplement.
-             *
-             * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
-             * scope. Everything must be passed by parameters.
-             *
-             * @since 4.2.0
-             *
-             * @private
-             *
-             * @param {CanvasRenderingContext2D} context 2D Context.
-             * @param {string} type Whether to test for support of "flag" or "emoji".
-             * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
-             *
-             * @return {boolean} True if the browser can render emoji, false if it cannot.
-             */
-            function browserSupportsEmoji(context, type, emojiSetsRenderIdentically) {
-                var isIdentical;
-
-                switch (type) {
-                    case 'flag':
-                        /*
-                         * Test for Transgender flag compatibility. Added in Unicode 13.
-                         *
-                         * To test for support, we try to render it, and compare the rendering to how it would look if
-                         * the browser doesn't render it correctly (white flag emoji + transgender symbol).
-                         */
-                        isIdentical = emojiSetsRenderIdentically(
-                            context,
-                            '\uD83C\uDFF3\uFE0F\u200D\u26A7\uFE0F', // as a zero-width joiner sequence
-                            '\uD83C\uDFF3\uFE0F\u200B\u26A7\uFE0F' // separated by a zero-width space
-                        );
-
-                        if (isIdentical) {
-                            return false;
-                        }
-
-                        /*
-                         * Test for UN flag compatibility. This is the least supported of the letter locale flags,
-                         * so gives us an easy test for full support.
-                         *
-                         * To test for support, we try to render it, and compare the rendering to how it would look if
-                         * the browser doesn't render it correctly ([U] + [N]).
-                         */
-                        isIdentical = emojiSetsRenderIdentically(
-                            context,
-                            '\uD83C\uDDFA\uD83C\uDDF3', // as the sequence of two code points
-                            '\uD83C\uDDFA\u200B\uD83C\uDDF3' // as the two code points separated by a zero-width space
-                        );
-
-                        if (isIdentical) {
-                            return false;
-                        }
-
-                        /*
-                         * Test for English flag compatibility. England is a country in the United Kingdom, it
-                         * does not have a two letter locale code but rather a five letter sub-division code.
-                         *
-                         * To test for support, we try to render it, and compare the rendering to how it would look if
-                         * the browser doesn't render it correctly (black flag emoji + [G] + [B] + [E] + [N] + [G]).
-                         */
-                        isIdentical = emojiSetsRenderIdentically(
-                            context,
-                            // as the flag sequence
-                            '\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F',
-                            // with each code point separated by a zero-width space
-                            '\uD83C\uDFF4\u200B\uDB40\uDC67\u200B\uDB40\uDC62\u200B\uDB40\uDC65\u200B\uDB40\uDC6E\u200B\uDB40\uDC67\u200B\uDB40\uDC7F'
-                        );
-
-                        return !isIdentical;
-                    case 'emoji':
-                        /*
-                         * Four and twenty blackbirds baked in a pie.
-                         *
-                         * To test for Emoji 15.0 support, try to render a new emoji: Blackbird.
-                         *
-                         * The Blackbird is a ZWJ sequence combining 🐦 Bird and ⬛ large black square.,
-                         *
-                         * 0x1F426 (\uD83D\uDC26) == Bird
-                         * 0x200D == Zero-Width Joiner (ZWJ) that links the code points for the new emoji or
-                         * 0x200B == Zero-Width Space (ZWS) that is rendered for clients not supporting the new emoji.
-                         * 0x2B1B == Large Black Square
-                         *
-                         * When updating this test for future Emoji releases, ensure that individual emoji that make up the
-                         * sequence come from older emoji standards.
-                         */
-                        isIdentical = emojiSetsRenderIdentically(
-                            context,
-                            '\uD83D\uDC26\u200D\u2B1B', // as the zero-width joiner sequence
-                            '\uD83D\uDC26\u200B\u2B1B' // separated by a zero-width space
-                        );
-
-                        return !isIdentical;
-                }
-
-                return false;
-            }
-
-            /**
-             * Checks emoji support tests.
-             *
-             * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
-             * scope. Everything must be passed by parameters.
-             *
-             * @since 6.3.0
-             *
-             * @private
-             *
-             * @param {string[]} tests Tests.
-             * @param {Function} browserSupportsEmoji Reference to browserSupportsEmoji function, needed due to minification.
-             * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
-             *
-             * @return {SupportTests} Support tests.
-             */
-            function testEmojiSupports(tests, browserSupportsEmoji, emojiSetsRenderIdentically) {
-                var canvas;
-                if (
-                    typeof WorkerGlobalScope !== 'undefined' &&
-                    self instanceof WorkerGlobalScope
-                ) {
-                    canvas = new OffscreenCanvas(300, 150); // Dimensions are default for HTMLCanvasElement.
-                } else {
-                    canvas = document.createElement('canvas');
-                }
-
-                var context = canvas.getContext('2d', { willReadFrequently: true });
-
-                /*
-                 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
-                 * it doesn't work when the font is bolder than 500 weight. So, we
-                 * check for bold rendering support to avoid invisible emoji in Chrome.
-                 */
-                context.textBaseline = 'top';
-                context.font = '600 32px Arial';
-
-                var supports = {};
-                tests.forEach(function (test) {
-                    supports[test] = browserSupportsEmoji(context, test, emojiSetsRenderIdentically);
-                });
-                return supports;
-            }
-
-            /**
-             * Adds a script to the head of the document.
-             *
-             * @ignore
-             *
-             * @since 4.2.0
-             *
-             * @param {string} src The url where the script is located.
-             *
-             * @return {void}
-             */
-            function addScript(src) {
-                var script = document.createElement('script');
-                script.src = src;
-                script.defer = true;
-                document.head.appendChild(script);
-            }
-
-            settings.supports = {
-                everything: true,
-                everythingExceptFlag: true
-            };
-
-            // Create a promise for DOMContentLoaded since the worker logic may finish after the event has fired.
-            var domReadyPromise = new Promise(function (resolve) {
-                document.addEventListener('DOMContentLoaded', resolve, {
-                    once: true
-                });
-            });
-
-            // Obtain the emoji support from the browser, asynchronously when possible.
-            new Promise(function (resolve) {
-                var supportTests = getSessionSupportTests();
-                if (supportTests) {
-                    resolve(supportTests);
-                    return;
-                }
-
-                if (supportsWorkerOffloading()) {
-                    try {
-                        // Note that the functions are being passed as arguments due to minification.
-                        var workerScript =
-                            'postMessage(' +
-                            testEmojiSupports.toString() +
-                            '(' +
-                            [
-                                JSON.stringify(tests),
-                                browserSupportsEmoji.toString(),
-                                emojiSetsRenderIdentically.toString()
-                            ].join(',') +
-                            '));';
-                        var blob = new Blob([workerScript], {
-                            type: 'text/javascript'
-                        });
-                        var worker = new Worker(URL.createObjectURL(blob), { name: 'wpTestEmojiSupports' });
-                        worker.onmessage = function (event) {
-                            supportTests = event.data;
-                            setSessionSupportTests(supportTests);
-                            worker.terminate();
-                            resolve(supportTests);
-                        };
-                        return;
-                    } catch (e) { }
-                }
-
-                supportTests = testEmojiSupports(tests, browserSupportsEmoji, emojiSetsRenderIdentically);
-                setSessionSupportTests(supportTests);
-                resolve(supportTests);
-            })
-                // Once the browser emoji support has been obtained from the session, finalize the settings.
-                .then(function (supportTests) {
-                    /*
-                     * Tests the browser support for flag emojis and other emojis, and adjusts the
-                     * support settings accordingly.
-                     */
-                    for (var test in supportTests) {
-                        settings.supports[test] = supportTests[test];
-
-                        settings.supports.everything =
-                            settings.supports.everything && settings.supports[test];
-
-                        if ('flag' !== test) {
-                            settings.supports.everythingExceptFlag =
-                                settings.supports.everythingExceptFlag &&
-                                settings.supports[test];
-                        }
-                    }
-
-                    settings.supports.everythingExceptFlag =
-                        settings.supports.everythingExceptFlag &&
-                        !settings.supports.flag;
-
-                    // Sets DOMReady to false and assigns a ready function to settings.
-                    settings.DOMReady = false;
-                    settings.readyCallback = function () {
-                        settings.DOMReady = true;
-                    };
-                })
-                .then(function () {
-                    return domReadyPromise;
-                })
-                .then(function () {
-                    // When the browser can not render everything we need to load a polyfill.
-                    if (!settings.supports.everything) {
-                        settings.readyCallback();
-
-                        var src = settings.source || {};
-
-                        if (src.concatemoji) {
-                            addScript(src.concatemoji);
-                        } else if (src.wpemoji && src.twemoji) {
-                            addScript(src.twemoji);
-                            addScript(src.wpemoji);
-                        }
-                    }
-                });
-        })(window, document, window._wpemojiSettings);
-    </script>
+  
     <link rel="stylesheet" id="bricksforge-style-css" href="css/style_1.css" media="all">
     <style id="wp-emoji-styles-inline-css">
         img.wp-smiley,
@@ -5715,9 +5289,7 @@
     </script>
     <script src="js/script.js" id="wishlist-box-basic-blocks-script-js"></script>
     <script src="js/jquery.blockUI.js" id="jquery-blockui-js" defer="" data-wp-strategy="defer"></script>
-    <script id="wc-add-to-cart-js-extra">
-        var wc_add_to_cart_params = { "ajax_url": "\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/?wc-ajax=%%endpoint%%", "i18n_view_cart": "View cart", "cart_url": "https:\/\/bitlabacademy.com\/cart\/", "is_cart": "", "cart_redirect_after_add": "no" };
-    </script>
+  
     <script src="js/add-to-cart.js" id="wc-add-to-cart-js" defer="" data-wp-strategy="defer"></script>
     <script src="js/js.cookie.js" id="js-cookie-js" defer="" data-wp-strategy="defer"></script>
     <script id="woocommerce-js-extra">
@@ -5725,30 +5297,13 @@
     </script>
     <script src="js/woocommerce.js" id="woocommerce-js" defer="" data-wp-strategy="defer"></script>
     <script src="js/bootstrap.bundle.min.js" id="wishlist-courses-bootstrap-js"></script>
-    <script id="wishlist-courses-front-script-js-extra">
-        var wlcourses_front_vars = { "wlm_pluginsurl": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/coursecure\/addons\/wishlist-courses", "includes_url": "https:\/\/bitlabacademy.com\/wp-includes\/", "ajax_url": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "action_prefix": "wishlist-courses", "sku": "Plugin_Sku", "version": "0.1.0" };
-    </script>
+   
     <script src="js/template.js" id="wishlist-courses-front-script-js"></script>
     <script src="js/index.8f56e9d3.js" id="wishlist-courses-x-script-js"></script>
-    <script id="sib-front-js-js-extra">
-        var sibErrMsg = { "invalidMail": "Please fill out valid email address", "requiredField": "Please fill out required fields", "invalidDateFormat": "Please fill out valid date format", "invalidSMSFormat": "Please fill out valid phone number" };
-        var ajax_sib_front_object = { "ajax_url": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "ajax_nonce": "c6e06bdd2c", "flag_url": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/mailin\/img\/flags\/" };
-    </script>
+   
     <script src="js/mailin-front.js" id="sib-front-js-js"></script>
     <script src="js/wlq_custom.js" id="wlq-custom-js"></script>
-    <link rel="https://api.w.org/" href="https://bitlabacademy.com/wp-json/">
-    <link rel="alternate" title="JSON" type="application/json"
-        href="https://bitlabacademy.com/wp-json/wp/v2/pages/50022">
-    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://bitlabacademy.com/xmlrpc.php?rsd">
-    <meta name="generator" content="WordPress 6.6.1">
-    <meta name="generator" content="WooCommerce 9.1.1">
-    <link rel="canonical" href="https://bitlabacademy.com/wlcourses/">
-    <link rel="shortlink" href="https://bitlabacademy.com/?p=50022">
-    <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed"
-        href="https://bitlabacademy.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitlabacademy.com%2Fwlcourses%2F">
-    <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed"
-        href="https://bitlabacademy.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitlabacademy.com%2Fwlcourses%2F&amp;format=xml">
-    <!-- Running WishList Member Legacy with CourseCure v3.26.9 -->
+  
     <!-- CourseCure Customizer CSS-->
     <style type="text/css"></style><!--/ CourseCure Customizer CSS--> <noscript>
         <style>
@@ -5778,8 +5333,7 @@
     <link rel="icon" href="images/cropped-bitlab-beaker-1-32x32.png" sizes="32x32">
     <link rel="icon" href="images/cropped-bitlab-beaker-1-192x192.png" sizes="192x192">
     <link rel="apple-touch-icon" href="images/cropped-bitlab-beaker-1-180x180.png">
-    <meta name="msapplication-TileImage"
-        content="https://bitlabacademy.com/wp-content/uploads/cropped-bitlab-beaker-1-270x270.png">
+ 
     <style id="wp-custom-css">
 
     </style>
@@ -5802,17 +5356,17 @@
         <section id="brxe-wqfaoo" class="brxe-section">
             <div id="brxe-tkjlzk" class="brxe-container o-relative">
                 <div id="brxe-mepcsw" class="brxe-div o-relative"><a id="brxe-ftqyjm" class="brxe-logo"
-                        href="https://bitlabacademy.com/" title="visit homepage" aria-label="visit homepage">
+                        href="./index.html" title="visit homepage" aria-label="visit homepage" aria-current="page">
                         <picture class="bricks-site-logo css-filter"
-                            data-bricks-logo="https://bitlabacademy.com/wp-content/uploads/bitlab-academy-logo-2-424x156.png"
-                            loading="eager" decoding="async" fetchpriority="high">
+                            data-bricks-logo="./images/bitlab-academy-logo-2-424x156.png" loading="eager"
+                            decoding="async" fetchpriority="high">
                             <source type="image/webp"
                                 srcset="images/bitlab-academy-logo-2-424x156.png.webp 424w, images/bitlab-academy-logo-2-90x33.png.webp 90w, images/bitlab-academy-logo-2-24x9.png.webp 24w, images/bitlab-academy-logo-2.png.webp 440w"
                                 sizes="(max-width: 424px) 100vw, 424px">
                             <img width="424" height="156" src="images/bitlab-academy-logo-2-424x156.png"
                                 class="bricks-site-logo css-filter" alt="BitLab Academy"
-                                data-bricks-logo="https://bitlabacademy.com/wp-content/uploads/bitlab-academy-logo-2-424x156.png"
-                                loading="eager" decoding="async" fetchpriority="high"
+                                data-bricks-logo="./images/bitlab-academy-logo-2-424x156.png" loading="eager"
+                                decoding="async" fetchpriority="high"
                                 srcset="images/bitlab-academy-logo-2-424x156.png 424w, images/bitlab-academy-logo-2-90x33.png 90w, images/bitlab-academy-logo-2-24x9.png 24w, images/bitlab-academy-logo-2.png 440w"
                                 sizes="(max-width: 424px) 100vw, 424px">
                         </picture>
@@ -5829,21 +5383,22 @@
                             <nav class="bricks-mobile-menu-wrapper left fade-in">
                                 <ul id="menu-home-header" class="bricks-mobile-menu">
                                     <li id="menu-item-52654"
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-52654 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/">Home</a></li>
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51384 bricks-menu-item">
+                                        <a href="./index.html" aria-current="page">Home</a>
+                                    </li>
                                     <li id="menu-item-52070"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52070 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/about/">About</a></li>
-                                    <li id="menu-item-56796"
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56796 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/indicators/advanced/">Indicators</a></li>
+                                        <a href="./about.html">About</a>
+                                    </li>
+
                                     <li id="menu-item-57824"
-                                        class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-50022 current_page_item menu-item-57824 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/wlcourses/" aria-current="page">Courses</a>
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57824 bricks-menu-item">
+                                        <a href="./courses.html">Courses</a>
                                     </li>
                                     <li id="menu-item-51384"
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51384 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/faqs/">FAQ</a></li>
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-52208 current_page_item menu-item-52654 bricks-menu-item"">
+										<a href=" ./contact-us.html">Contact Us</a>
+                                    </li>
                                 </ul>
                             </nav>
                             <div class="bricks-mobile-menu-overlay"></div>
@@ -5852,81 +5407,29 @@
                             <menu class="o-menubar-navigation" role="menubar" aria-label="header-menu">
                                 <li class="brxe-div" role="none"><a
                                         class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
-                                        href="https://bitlabacademy.com" title="Home" aria-label="Home">Home</a></li>
-                                <li class="brxe-div" role="none"><a
-                                        class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
-                                        href="https://bitlabacademy.com/about/" title="About"
-                                        aria-label="About">About</a></li>
-                                <li class="brxe-div" role="none"><a
-                                        class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
-                                        href="https://bitlabacademy.com/indicators/advanced/" title="Indicators"
-                                        aria-label="Indicators">Indicators</a></li>
-                                <li id="brxe-jxikrk" class="brxe-div" role="none"><a
-                                        class="brxe-text-basic o-menubar-navigation__top-link--expandable o-menubar-navigation__top-menuitem"
-                                        role="menuitem" aria-haspopup="true" aria-expanded="false"
-                                        href="https://bitlabacademy.com/wlcourses/" title="Courses" aria-label="Courses"
-                                        aria-current="page">Courses</a>
-                                    <ul id="brxe-onjams" class="brxe-div o-menubar-navigation__submenu" role="menu"
-                                        aria-label="Submenu 1">
-                                        <li id="brxe-xjsdsi" class="brxe-div" role="none"><a
-                                                class="brxe-text-basic o-menubar-navigation__sub-menuitem"
-                                                role="menuitem" href="/wlcourses/?cat=50070/"
-                                                title="Free Courses Access" aria-label="Free Access"
-                                                aria-current="page">Free Access</a></li>
-                                        <li class="brxe-szptsv brxe-div" role="none"><a
-                                                class="brxe-qrtmul brxe-text-basic o-menubar-navigation__sub-menuitem"
-                                                role="menuitem" href="/wlcourses?cat=50065" title="Our Courses"
-                                                aria-label="Our Courses" aria-current="page">Basics</a></li>
-                                        <li class="brxe-szptsv brxe-div" role="none"><a
-                                                class="brxe-qrtmul brxe-text-basic o-menubar-navigation__sub-menuitem"
-                                                role="menuitem" href="/wlcourses?cat=50066" title="Our Courses"
-                                                aria-label="Our Courses" aria-current="page">TA</a></li>
-                                        <li class="brxe-szptsv brxe-div" role="none"><a
-                                                class="brxe-qrtmul brxe-text-basic o-menubar-navigation__sub-menuitem"
-                                                role="menuitem" href="/wlcourses?cat=50067" title="Our Courses"
-                                                aria-label="Our Courses" aria-current="page">Trading</a></li>
-                                        <li class="brx-query-trail" data-query-element-id="szptsv" data-query-vars="{"
-                                            post_type":["wlcourses"],"taxonomy":["wlcourses_category"],"orderby":"name","number":"10","paged":1,"original_offset":0,"exclude":["50034","50070"]}"=""
-                                            data-page="1" data-max-pages="1"></li>
-                                        <li id="brxe-giyvem" class="brxe-div" role="none"><a
-                                                class="brxe-text-basic o-menubar-navigation__sub-menuitem"
-                                                role="menuitem" href="/wlcourses" aria-current="page">View All</a></li>
-                                    </ul>
+                                        href="./index.html" title="Home" aria-label="Home">Home</a>
                                 </li>
                                 <li class="brxe-div" role="none"><a
                                         class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
-                                        href="/faqs" title="FAQ Page" aria-label="FAQ Page">FAQ</a></li>
+                                        href="./about.html" title="About" aria-label="About">About</a></li>
+
+                                <li class="brxe-div" role="none"><a
+                                        class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
+                                        href="./courses.html" title="Courses" aria-label="About">Courses</a></li>
+
+
+
+                                <li class="brxe-div" role="none"><a
+                                        class="brxe-text-basic o-menubar-navigation__top-menuitem" role="menuitem"
+                                        href="./contact-us.html" title="Contact Us" aria-label="contact us"
+                                        aria-current="page">Contact
+                                        Us</a></li>
                             </menu>
                         </nav>
                     </div>
-                    <div id="brxe-kcvtpx" class="brxe-div"><a id="brxe-kmffex"
-                            class="brxe-button bricks-button sm outline bricks-color-primary circle"
-                            href="/wp-login.php" title="Login" aria-label="Login">Login</a></div>
-                    <div id="brxe-puonay" class="brxe-div"><a id="brxe-xmcakc"
-                            class="brxe-button bricks-button sm outline bricks-color-primary circle"
-                            href="/wp-login.php" title="Login" aria-label="Login">Login</a><a id="brxe-lebjpg"
-                            class="brxe-button bricks-button sm bricks-background-primary circle"
-                            href="https://bitlabacademy.com/free-access-signup/" title="Enroll"
-                            aria-label="Enroll">Enroll Now</a></div>
-                    <div id="brxe-wglolt" class="brxe-div">
-                        <div id="brxe-spixfy" data-script-id="spixfy" class="brxe-woocommerce-mini-cart">
-                            <a href="https://bitlabacademy.com/cart/" class="mini-cart-link toggle-button"
-                                aria-label="View cart" data-toggle-target=".cart-detail-spixfy">
-                                <span class="cart-icon">
-                                    <svg class="fill" xmlns="http://www.w3.org/2000/svg" width="36" height="32"
-                                        viewBox="0 0 576 512">
-                                        <path fill="currentColor"
-                                            d="M0 24C0 10.7 10.7 0 24 0h45.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5l-51.6-271c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zm128 440a48 48 0 1 1 96 0a48 48 0 1 1-96 0zm336-48a48 48 0 1 1 0 96a48 48 0 1 1 0-96z">
-                                        </path>
-                                    </svg> <span class="cart-count">0</span>
-                                </span>
 
-                                <span class="cart-subtotal"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>0.00</bdi></span></span>
-                            </a>
 
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>
@@ -5947,50 +5450,15 @@
             </div>
         </div>
         <div class="container wc-course-list g-0 pt-4">
-            <!-- Begin: Filter Bar -->
-            <div class="container my-4 wc-filter-bar p-3 rounded-3">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="d-flex flex-column flex-lg-row">
-                                    <div class="p-2 flex-grow-1">
-                                        <label class="form-label" for="">Search</label>
-                                        <div class="input-group wc-search-box">
-                                            <span class="input-group-text" id=""><i
-                                                    class="wc-icon wc-icon-search"></i></span>
-                                            <input type="text" value="" class="form-control w-50"
-                                                id="archive-search-text" placeholder="Course Name, Keywords, etc.">
-                                            <select class="form-select w-auto border-start" id="archive-search-category"
-                                                aria-label="Select Categories">
-                                                <option value="" selected="selected">All Categories</option>
-                                                <option value="50065">Basics</option>
-                                                <option value="50070">Free Access</option>
-                                                <option value="50034">Legacy Courses</option>
-                                                <option value="50066">TA</option>
-                                                <option value="50067">Trading</option>
-                                            </select>
-                                            <select class="form-select w-auto border-start"
-                                                id="archive-search-difficulty" aria-label="Select Difficulty">
-                                                <option value="" selected="selected">All Difficulty</option>
-                                            </select>
-                                            <button class="btn wc-btn btn-primary btn-archive-search">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End: Filter Bar  -->
+           
             <div id="course-list-holder" class="row row-cols-1 row-cols-md-2 row-cols-sm-1 row-cols-xl-3">
                 <div class="col mb-5">
                     <div class="card rounded-3 wc-course-card h-100 ca-card-locked">
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/blockchain-101-424x255.jpg.webp 424w, images/blockchain-101-768x462.jpg.webp 768w, images/blockchain-101-1536x924.jpg.webp 1536w, images/blockchain-101-90x54.jpg.webp 90w, images/blockchain-101-24x14.jpg.webp 24w, images/blockchain-101-1200x722.jpg.webp 1200w, images/blockchain-101-600x361.jpg.webp 600w, images/blockchain-101.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -5998,7 +5466,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/blockchain-101-424x255.jpg 424w, images/blockchain-101-768x462.jpg 768w, images/blockchain-101-1536x924.jpg 1536w, images/blockchain-101-90x54.jpg 90w, images/blockchain-101-24x14.jpg 24w, images/blockchain-101-1200x722.jpg 1200w, images/blockchain-101-600x361.jpg 600w, images/blockchain-101.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6018,7 +5486,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/blockchain-101/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6029,7 +5497,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/bitcoin-101-424x255.jpg.webp 424w, images/bitcoin-101-768x462.jpg.webp 768w, images/bitcoin-101-1536x924.jpg.webp 1536w, images/bitcoin-101-90x54.jpg.webp 90w, images/bitcoin-101-24x14.jpg.webp 24w, images/bitcoin-101-1200x722.jpg.webp 1200w, images/bitcoin-101-600x361.jpg.webp 600w, images/bitcoin-101.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6037,7 +5506,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/bitcoin-101-424x255.jpg 424w, images/bitcoin-101-768x462.jpg 768w, images/bitcoin-101-1536x924.jpg 1536w, images/bitcoin-101-90x54.jpg 90w, images/bitcoin-101-24x14.jpg 24w, images/bitcoin-101-1200x722.jpg 1200w, images/bitcoin-101-600x361.jpg 600w, images/bitcoin-101.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6057,7 +5526,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/bitcoin-101/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6068,7 +5537,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/crypto-beginners-1-424x255.jpg.webp 424w, images/crypto-beginners-1-768x462.jpg.webp 768w, images/crypto-beginners-1-1536x924.jpg.webp 1536w, images/crypto-beginners-1-90x54.jpg.webp 90w, images/crypto-beginners-1-24x14.jpg.webp 24w, images/crypto-beginners-1-1200x722.jpg.webp 1200w, images/crypto-beginners-1-600x361.jpg.webp 600w, images/crypto-beginners-1.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6076,7 +5546,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/crypto-beginners-1-424x255.jpg 424w, images/crypto-beginners-1-768x462.jpg 768w, images/crypto-beginners-1-1536x924.jpg 1536w, images/crypto-beginners-1-90x54.jpg 90w, images/crypto-beginners-1-24x14.jpg 24w, images/crypto-beginners-1-1200x722.jpg 1200w, images/crypto-beginners-1-600x361.jpg 600w, images/crypto-beginners-1.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6095,7 +5565,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/crypto-beginners/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6106,7 +5576,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/crypto-self-custody-424x255.jpg.webp 424w, images/crypto-self-custody-768x462.jpg.webp 768w, images/crypto-self-custody-1536x924.jpg.webp 1536w, images/crypto-self-custody-90x54.jpg.webp 90w, images/crypto-self-custody-24x14.jpg.webp 24w, images/crypto-self-custody-1200x722.jpg.webp 1200w, images/crypto-self-custody-600x361.jpg.webp 600w, images/crypto-self-custody.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6114,7 +5585,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/crypto-self-custody-424x255.jpg 424w, images/crypto-self-custody-768x462.jpg 768w, images/crypto-self-custody-1536x924.jpg 1536w, images/crypto-self-custody-90x54.jpg 90w, images/crypto-self-custody-24x14.jpg 24w, images/crypto-self-custody-1200x722.jpg 1200w, images/crypto-self-custody-600x361.jpg 600w, images/crypto-self-custody.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6134,7 +5605,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/self-custody/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6145,7 +5616,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/trading-fundamentals-424x255.jpg.webp 424w, images/trading-fundamentals-768x462.jpg.webp 768w, images/trading-fundamentals-1536x924.jpg.webp 1536w, images/trading-fundamentals-90x54.jpg.webp 90w, images/trading-fundamentals-24x14.jpg.webp 24w, images/trading-fundamentals-1200x722.jpg.webp 1200w, images/trading-fundamentals-600x361.jpg.webp 600w, images/trading-fundamentals.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6153,7 +5625,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/trading-fundamentals-424x255.jpg 424w, images/trading-fundamentals-768x462.jpg 768w, images/trading-fundamentals-1536x924.jpg 1536w, images/trading-fundamentals-90x54.jpg 90w, images/trading-fundamentals-24x14.jpg 24w, images/trading-fundamentals-1200x722.jpg 1200w, images/trading-fundamentals-600x361.jpg 600w, images/trading-fundamentals.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6174,7 +5646,7 @@
                             </div>
                             <div class="align-items-center card-footer d-flex">
                                 <div class="ms-auto"> <a
-                                        href="https://bitlabacademy.com/wlcourses/trading-fundamentals-2-0/"
+                                        href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6185,7 +5657,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/trading-psychology-424x255.jpg.webp 424w, images/trading-psychology-768x462.jpg.webp 768w, images/trading-psychology-1536x924.jpg.webp 1536w, images/trading-psychology-90x54.jpg.webp 90w, images/trading-psychology-24x14.jpg.webp 24w, images/trading-psychology-1200x722.jpg.webp 1200w, images/trading-psychology-600x361.jpg.webp 600w, images/trading-psychology.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6193,7 +5666,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/trading-psychology-424x255.jpg 424w, images/trading-psychology-768x462.jpg 768w, images/trading-psychology-1536x924.jpg 1536w, images/trading-psychology-90x54.jpg 90w, images/trading-psychology-24x14.jpg 24w, images/trading-psychology-1200x722.jpg 1200w, images/trading-psychology-600x361.jpg 600w, images/trading-psychology.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6214,7 +5687,7 @@
                             </div>
                             <div class="align-items-center card-footer d-flex">
                                 <div class="ms-auto"> <a
-                                        href="https://bitlabacademy.com/wlcourses/psychology-of-trading/"
+                                        href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6225,7 +5698,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/crypto-onchain-analysis-424x255.jpg.webp 424w, images/crypto-onchain-analysis-768x462.jpg.webp 768w, images/crypto-onchain-analysis-1536x924.jpg.webp 1536w, images/crypto-onchain-analysis-90x54.jpg.webp 90w, images/crypto-onchain-analysis-24x14.jpg.webp 24w, images/crypto-onchain-analysis-1200x722.jpg.webp 1200w, images/crypto-onchain-analysis-600x361.jpg.webp 600w, images/crypto-onchain-analysis.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6233,7 +5707,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/crypto-onchain-analysis-424x255.jpg 424w, images/crypto-onchain-analysis-768x462.jpg 768w, images/crypto-onchain-analysis-1536x924.jpg 1536w, images/crypto-onchain-analysis-90x54.jpg 90w, images/crypto-onchain-analysis-24x14.jpg 24w, images/crypto-onchain-analysis-1200x722.jpg 1200w, images/crypto-onchain-analysis-600x361.jpg 600w, images/crypto-onchain-analysis.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6253,7 +5727,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/onchain-analysis/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6264,7 +5738,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/candles-424x255.jpg.webp 424w, images/candles-768x462.jpg.webp 768w, images/candles-1536x924.jpg.webp 1536w, images/candles-90x54.jpg.webp 90w, images/candles-24x14.jpg.webp 24w, images/candles-1200x722.jpg.webp 1200w, images/candles-600x361.jpg.webp 600w, images/candles.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6272,7 +5747,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/candles-424x255.jpg 424w, images/candles-768x462.jpg 768w, images/candles-1536x924.jpg 1536w, images/candles-90x54.jpg 90w, images/candles-24x14.jpg 24w, images/candles-1200x722.jpg 1200w, images/candles-600x361.jpg 600w, images/candles.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6292,7 +5767,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/candles/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6303,7 +5778,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/candle-patterns-424x255.jpg.webp 424w, images/candle-patterns-768x462.jpg.webp 768w, images/candle-patterns-1536x924.jpg.webp 1536w, images/candle-patterns-90x54.jpg.webp 90w, images/candle-patterns-24x14.jpg.webp 24w, images/candle-patterns-1200x722.jpg.webp 1200w, images/candle-patterns-600x361.jpg.webp 600w, images/candle-patterns.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6311,7 +5787,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/candle-patterns-424x255.jpg 424w, images/candle-patterns-768x462.jpg 768w, images/candle-patterns-1536x924.jpg 1536w, images/candle-patterns-90x54.jpg 90w, images/candle-patterns-24x14.jpg 24w, images/candle-patterns-1200x722.jpg 1200w, images/candle-patterns-600x361.jpg 600w, images/candle-patterns.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6331,7 +5807,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/candle-patterns/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6342,7 +5818,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/trading-indicators-424x255.jpg.webp 424w, images/trading-indicators-768x462.jpg.webp 768w, images/trading-indicators-1536x924.jpg.webp 1536w, images/trading-indicators-90x54.jpg.webp 90w, images/trading-indicators-24x14.jpg.webp 24w, images/trading-indicators-1200x722.jpg.webp 1200w, images/trading-indicators-600x361.jpg.webp 600w, images/trading-indicators.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6350,7 +5827,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/trading-indicators-424x255.jpg 424w, images/trading-indicators-768x462.jpg 768w, images/trading-indicators-1536x924.jpg 1536w, images/trading-indicators-90x54.jpg 90w, images/trading-indicators-24x14.jpg 24w, images/trading-indicators-1200x722.jpg 1200w, images/trading-indicators-600x361.jpg 600w, images/trading-indicators.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6371,7 +5848,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/indicators/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6382,7 +5859,8 @@
                         <div class="card-img-container">
                             <span class="wc-icon-container position-absolute top-50 start-50 translate-middle"><i
                                     class="wc-icon wc-icon-https"></i></span>
-                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async">
+                            <picture class="attachment-course-card size-course-card wp-post-image" decoding="async"
+                                style="height: auto;">
                                 <source type="image/webp"
                                     srcset="images/trading-strategies-424x255.jpg.webp 424w, images/trading-strategies-768x462.jpg.webp 768w, images/trading-strategies-1536x924.jpg.webp 1536w, images/trading-strategies-90x54.jpg.webp 90w, images/trading-strategies-24x14.jpg.webp 24w, images/trading-strategies-1200x722.jpg.webp 1200w, images/trading-strategies-600x361.jpg.webp 600w, images/trading-strategies.jpg.webp 1767w"
                                     sizes="(max-width: 424px) 100vw, 424px">
@@ -6390,7 +5868,7 @@
                                     class="attachment-course-card size-course-card wp-post-image" alt=""
                                     decoding="async"
                                     srcset="images/trading-strategies-424x255.jpg 424w, images/trading-strategies-768x462.jpg 768w, images/trading-strategies-1536x924.jpg 1536w, images/trading-strategies-90x54.jpg 90w, images/trading-strategies-24x14.jpg 24w, images/trading-strategies-1200x722.jpg 1200w, images/trading-strategies-600x361.jpg 600w, images/trading-strategies.jpg 1767w"
-                                    sizes="(max-width: 424px) 100vw, 424px">
+                                    sizes="(max-width: 424px) 100vw, 424px" style="height: auto;">
                             </picture>
                         </div>
                         <div class="card-container h-100 d-flex flex-column">
@@ -6410,7 +5888,7 @@
                                 </div>
                             </div>
                             <div class="align-items-center card-footer d-flex">
-                                <div class="ms-auto"> <a href="https://bitlabacademy.com/wlcourses/trading-strategies/"
+                                <div class="ms-auto"> <a href="https://telegram.me/adrianajensen" target="_blank"
                                         class="btn btn-primary wc-btn">Get Access</a></div>
                             </div>
                         </div>
@@ -6456,20 +5934,15 @@
                                 <ul id="menu-home-header-1" class="bricks-nav-menu">
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-52654 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/">Home</a></li>
+                                        <a href="./index.html">Home</a></li>
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52070 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/about/">About</a></li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56796 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/indicators/advanced/">Indicators</a></li>
+                                        <a href="./about.html">About</a></li>
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-50022 current_page_item menu-item-57824 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/wlcourses/" aria-current="page">Courses</a>
+                                        <a href="./courses.html" aria-current="page">Courses</a>
                                     </li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51384 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/faqs/">FAQ</a></li>
+                                 
                                 </ul>
                             </nav> <button class="bricks-mobile-menu-toggle" aria-haspopup="true"
                                 aria-label="Open mobile menu" aria-expanded="false">
@@ -6481,20 +5954,16 @@
                                 <ul id="menu-home-header-2" class="bricks-mobile-menu">
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-52654 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/">Home</a></li>
+                                        <a href="./index.html">Home</a></li>
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52070 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/about/">About</a></li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56796 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/indicators/advanced/">Indicators</a></li>
+                                        <a href="./about.html">About</a></li>
+                                   
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-50022 current_page_item menu-item-57824 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/wlcourses/" aria-current="page">Courses</a>
+                                        <a href="./courses.html" aria-current="page">Courses</a>
                                     </li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51384 bricks-menu-item">
-                                        <a href="https://bitlabacademy.com/faqs/">FAQ</a></li>
+                                    
                                 </ul>
                             </nav>
                             <div class="bricks-mobile-menu-overlay"></div>
@@ -6503,7 +5972,7 @@
                     <div id="brxe-qrxgnz" class="brxe-div">
                         <div id="brxe-qitydo" data-script-id="qitydo" class="brxe-bricksprops-light-dark-toggle">
                             <button class="theme-toggle" id="theme-toggle" title="Toggles light &amp; dark"
-                                aria-label="auto" aria-live="polite">
+                                aria-label="dark" aria-live="polite">
                                 <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
                                     <mask class="moon" id="moon-mask">
                                         <rect x="0" y="0" width="100%" height="100%" fill="white" stroke="none"></rect>
@@ -6532,35 +6001,10 @@
                 <div class="brxe-div">
                     <div id="brxe-8a1a73" class="brxe-text-basic">© BitLab Academy 2024 | All Rights Reserved.</div>
                 </div>
-                <div class="brxe-div">
-                    <ul id="brxe-0d5412" class="brxe-list">
-                        <li>
-                            <div class="content"><a href="https://bitlabacademy.com/terms/"
-                                    aria-label="Term and Condition"><span class="title">Terms</span></a></div>
-                        </li>
-                        <li>
-                            <div class="content"><a href="https://bitlabacademy.com/privacy-policy/"
-                                    aria-label="Term and Condition"><span class="title">Privacy</span></a></div>
-                        </li>
-                        <li>
-                            <div class="content"><a href="https://bitlabacademy.com/cookie-consent/"
-                                    aria-label="Term and Condition"><span class="title">Cookies</span></a></div>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </section>
     </footer>
-    <script type="text/javascript">
-        function get_stripe_vars() {
-            return eval('(' + '{"cancelmessage":"Are you sure you want to cancel your subscription?","nonceinvoices":"f7d52467ae","nonceinvoicedetail":"65b7106899","noncecoupon":"821a03f0cc","noncecoupondetail":"f30c93511a","nonce_prorate":"13c01ee2e6","stripethankyouurl":"https:\/\/bitlabacademy.com\/register\/"}' + ')');
-        }
-        jQuery(function ($) {
-            // Coupon code toggle.
-            $('.stripe-coupon').hide();
-            $('<a href="#" style="display:block;padding: 0.5em 0" onclick="jQuery(this).hide();jQuery(this.dataset.target).show().focus();return false;" data-target=".stripe-coupon">' + wp.i18n.__('Have a coupon code?', 'wishlist-member') + '</a>').insertAfter('.stripe-coupon');
-        });
-    </script>
+   
     <script
         id="mcjs">!function (c, h, i, m, p) { m = c.createElement(h), p = c.getElementsByTagName(h)[0], m.async = 1, m.src = i, p.parentNode.insertBefore(m, p) }(document, "script", "https://chimpstatic.com/mcjs-connected/js/users/e51a046ba425d4c220b33bc36/bae0c5d2d797aea337f307dea.js");</script>
     <script>
@@ -6579,26 +6023,14 @@
  */
     </style>
     <script src="js/frontend.js" id="wlm3_js-js"></script>
-    <script id="presto-components-js-extra">
-        var prestoComponents = { "url": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/presto-player\/dist\/components\/web-components\/web-components.esm.js?ver=1720804952" };
-        var prestoPlayer = { "plugin_url": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/presto-player\/", "logged_in": "", "root": "https:\/\/bitlabacademy.com\/wp-json\/", "nonce": "afcadbee5d", "ajaxurl": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "isAdmin": "", "isSetup": { "bunny": { "storage": false, "stream": true } }, "proVersion": "2.0.6", "isPremium": "1", "wpVersionString": "wp\/v2\/", "prestoVersionString": "presto-player\/v1\/", "debug": "1", "debug_navigator": "", "i18n": { "skip": "Skip", "rewatch": "Rewatch", "emailPlaceholder": "Email address", "emailDefaultHeadline": "Enter your email to play this episode.", "chapters": "Chapters", "show_chapters": "Show Chapters", "hide_chapters": "Hide Chapters", "restart": "Restart", "rewind": "Rewind {seektime}s", "play": "Play", "pause": "Pause", "fastForward": "Forward {seektime}s", "seek": "Seek", "seekLabel": "{currentTime} of {duration}", "played": "Played", "buffered": "Buffered", "currentTime": "Current time", "duration": "Duration", "volume": "Volume", "mute": "Mute", "unmute": "Unmute", "enableCaptions": "Enable captions", "disableCaptions": "Disable captions", "download": "Download", "enterFullscreen": "Enter fullscreen", "exitFullscreen": "Exit fullscreen", "frameTitle": "Player for {title}", "captions": "Captions", "settings": "Settings", "pip": "PIP", "menuBack": "Go back to previous menu", "speed": "Speed", "normal": "Normal", "quality": "Quality", "loop": "Loop", "start": "Start", "end": "End", "all": "All", "reset": "Reset", "disabled": "Disabled", "enabled": "Enabled", "advertisement": "Ad", "qualityBadge": { "2160": "4K", "1440": "HD", "1080": "HD", "720": "HD", "576": "SD", "480": "SD" }, "auto": "AUTO", "upNext": "Up Next", "startOver": "Start Over" }, "hls_start_level": "480" };
-        var prestoComponents = { "url": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/presto-player\/dist\/components\/web-components\/web-components.esm.js?ver=1720804952" };
-        var prestoPlayer = { "plugin_url": "https:\/\/bitlabacademy.com\/wp-content\/plugins\/presto-player\/", "logged_in": "", "root": "https:\/\/bitlabacademy.com\/wp-json\/", "nonce": "afcadbee5d", "ajaxurl": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "isAdmin": "", "isSetup": { "bunny": { "storage": false, "stream": true } }, "proVersion": "2.0.6", "isPremium": "1", "wpVersionString": "wp\/v2\/", "prestoVersionString": "presto-player\/v1\/", "debug": "1", "debug_navigator": "", "i18n": { "skip": "Skip", "rewatch": "Rewatch", "emailPlaceholder": "Email address", "emailDefaultHeadline": "Enter your email to play this episode.", "chapters": "Chapters", "show_chapters": "Show Chapters", "hide_chapters": "Hide Chapters", "restart": "Restart", "rewind": "Rewind {seektime}s", "play": "Play", "pause": "Pause", "fastForward": "Forward {seektime}s", "seek": "Seek", "seekLabel": "{currentTime} of {duration}", "played": "Played", "buffered": "Buffered", "currentTime": "Current time", "duration": "Duration", "volume": "Volume", "mute": "Mute", "unmute": "Unmute", "enableCaptions": "Enable captions", "disableCaptions": "Disable captions", "download": "Download", "enterFullscreen": "Enter fullscreen", "exitFullscreen": "Exit fullscreen", "frameTitle": "Player for {title}", "captions": "Captions", "settings": "Settings", "pip": "PIP", "menuBack": "Go back to previous menu", "speed": "Speed", "normal": "Normal", "quality": "Quality", "loop": "Loop", "start": "Start", "end": "End", "all": "All", "reset": "Reset", "disabled": "Disabled", "enabled": "Enabled", "advertisement": "Ad", "qualityBadge": { "2160": "4K", "1440": "HD", "1080": "HD", "720": "HD", "576": "SD", "480": "SD" }, "auto": "AUTO", "upNext": "Up Next", "startOver": "Start Over" }, "hls_start_level": "480" };
-    </script>
+    
     <script src="js/web-components.esm.js" type="module" defer=""></script>
     <script src="js/sourcebuster.js" id="sourcebuster-js-js"></script>
-    <script id="wc-order-attribution-js-extra">
-        var wc_order_attribution = { "params": { "lifetime": 1.0e-5, "session": 30, "base64": false, "ajaxurl": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "prefix": "wc_order_attribution_", "allowTracking": true }, "fields": { "source_type": "current.typ", "referrer": "current_add.rf", "utm_campaign": "current.cmp", "utm_source": "current.src", "utm_medium": "current.mdm", "utm_content": "current.cnt", "utm_id": "current.id", "utm_term": "current.trm", "utm_source_platform": "current.plt", "utm_creative_format": "current.fmt", "utm_marketing_tactic": "current.tct", "session_entry": "current_add.ep", "session_start_time": "current_add.fd", "session_pages": "session.pgs", "session_count": "udata.vst", "user_agent": "udata.uag" } };
-    </script>
+
     <script src="js/order-attribution.js" id="wc-order-attribution-js"></script>
-    <script id="mailchimp-woocommerce-js-extra">
-        var mailchimp_public_data = { "site_url": "https:\/\/bitlabacademy.com", "ajax_url": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "disable_carts": "", "subscribers_only": "", "language": "en", "allowed_to_set_cookies": "1" };
-    </script>
+   
     <script src="js/mailchimp-woocommerce-public.min.js" id="mailchimp-woocommerce-js"></script>
-    <script id="bricks-scripts-js-extra">
-        var bricksWooCommerce = { "ajaxAddToCartEnabled": "", "ajaxAddingText": "Adding", "ajaxAddedText": "Added", "addedToCartNotices": "", "showNotice": "no", "scrollToNotice": "no", "resetTextAfter": "3", "useQtyInLoop": "" };
-        var bricksData = { "debug": "", "locale": "en_US", "ajaxUrl": "https:\/\/bitlabacademy.com\/wp-admin\/admin-ajax.php", "restApiUrl": "https:\/\/bitlabacademy.com\/wp-json\/bricks\/v1\/", "nonce": "31f676c6e9", "formNonce": "f1e254bfc9", "wpRestNonce": "afcadbee5d", "postId": "50022", "recaptchaIds": [], "animatedTypingInstances": [], "videoInstances": [], "splideInstances": [], "tocbotInstances": [], "swiperInstances": [], "queryLoopInstances": [], "interactions": [], "filterInstances": [], "isotopeInstances": [], "mapStyles": { "ultraLightWithLabels": { "label": "Ultra light with labels", "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#e9e9e9\" }, { \"lightness\": 17 } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f5f5f5\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 17 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 29 }, { \"weight\": 0.2 } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 18 } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"lightness\": 16 } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f5f5f5\" }, { \"lightness\": 21 } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#dedede\" }, { \"lightness\": 21 } ] }, { \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#ffffff\" }, { \"lightness\": 16 } ] }, { \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"saturation\": 36 }, { \"color\": \"#333333\" }, { \"lightness\": 40 } ] }, { \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f2f2f2\" }, { \"lightness\": 19 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#fefefe\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#fefefe\" }, { \"lightness\": 17 }, { \"weight\": 1.2 } ] } ]" }, "blueWater": { "label": "Blue water", "style": "[ { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#444444\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#f2f2f2\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"saturation\": -100 }, { \"lightness\": 45 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#46bcec\" }, { \"visibility\": \"on\" } ] } ]" }, "lightDream": { "label": "Light dream", "style": "[ { \"featureType\": \"landscape\", \"stylers\": [ { \"hue\": \"#FFBB00\" }, { \"saturation\": 43.400000000000006 }, { \"lightness\": 37.599999999999994 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.highway\", \"stylers\": [ { \"hue\": \"#FFC200\" }, { \"saturation\": -61.8 }, { \"lightness\": 45.599999999999994 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.arterial\", \"stylers\": [ { \"hue\": \"#FF0300\" }, { \"saturation\": -100 }, { \"lightness\": 51.19999999999999 }, { \"gamma\": 1 } ] }, { \"featureType\": \"road.local\", \"stylers\": [ { \"hue\": \"#FF0300\" }, { \"saturation\": -100 }, { \"lightness\": 52 }, { \"gamma\": 1 } ] }, { \"featureType\": \"water\", \"stylers\": [ { \"hue\": \"#0078FF\" }, { \"saturation\": -13.200000000000003 }, { \"lightness\": 2.4000000000000057 }, { \"gamma\": 1 } ] }, { \"featureType\": \"poi\", \"stylers\": [ { \"hue\": \"#00FF6A\" }, { \"saturation\": -1.0989010989011234 }, { \"lightness\": 11.200000000000017 }, { \"gamma\": 1 } ] } ]" }, "blueEssence": { "label": "Blue essence", "style": "[ { \"featureType\": \"landscape.natural\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#e0efef\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"on\" }, { \"hue\": \"#1900ff\" }, { \"color\": \"#c0e8e8\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry\", \"stylers\": [ { \"lightness\": 100 }, { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"transit.line\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 700 } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#7dcdcd\" } ] } ]" }, "appleMapsesque": { "label": "Apple maps-esque", "style": "[ { \"featureType\": \"landscape.man_made\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#f7f1df\" } ] }, { \"featureType\": \"landscape.natural\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#d0e3b4\" } ] }, { \"featureType\": \"landscape.natural.terrain\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.business\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.medical\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#fbd3da\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#bde6ab\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffe15f\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"color\": \"#efd151\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#ffffff\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"black\" } ] }, { \"featureType\": \"transit.station.airport\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#cfb2db\" } ] }, { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#a2daf2\" } ] } ]" }, "paleDawn": { "label": "Pale dawn", "style": "[ { \"featureType\": \"administrative\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 33 } ] }, { \"featureType\": \"landscape\", \"elementType\": \"all\", \"stylers\": [ { \"color\": \"#f2e5d4\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#c5dac6\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"on\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road\", \"elementType\": \"all\", \"stylers\": [ { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#c5c6c6\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#e4d7c6\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#fbfaf7\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#acbcc9\" } ] } ]" }, "neutralBlue": { "label": "Neutral blue", "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#193341\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#2c5a71\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#29768a\" }, { \"lightness\": -37 } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#406d80\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#406d80\" } ] }, { \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#3e606f\" }, { \"weight\": 2 }, { \"gamma\": 0.84 } ] }, { \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#ffffff\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry\", \"stylers\": [ { \"weight\": 0.6 }, { \"color\": \"#1a3541\" } ] }, { \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#2c5a71\" } ] } ]" }, "avocadoWorld": { "label": "Avocado world", "style": "[ { \"featureType\": \"water\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#aee2e0\" } ] }, { \"featureType\": \"landscape\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#abce83\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#769E72\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#7B8758\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#EBF4A4\" } ] }, { \"featureType\": \"poi.park\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"simplified\" }, { \"color\": \"#8dab68\" } ] }, { \"featureType\": \"road\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#5B5B3F\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#ABCE83\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels.icon\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#A4C67D\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#9BBF72\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"color\": \"#EBF4A4\" } ] }, { \"featureType\": \"transit\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.stroke\", \"stylers\": [ { \"visibility\": \"on\" }, { \"color\": \"#87ae79\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"geometry.fill\", \"stylers\": [ { \"color\": \"#7f2200\" }, { \"visibility\": \"off\" } ] }, { \"featureType\": \"administrative\", \"elementType\": \"labels.text.stroke\", \"stylers\": [ { \"color\": \"#ffffff\" }, { \"visibility\": \"on\" }, { \"weight\": 4.1 } ] }, { \"featureType\": \"administrative\", \"elementType\": \"labels.text.fill\", \"stylers\": [ { \"color\": \"#495421\" } ] }, { \"featureType\": \"administrative.neighborhood\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] } ]" }, "gowalla": { "label": "Gowalla", "style": "[ { \"featureType\": \"administrative.land_parcel\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"landscape.man_made\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"poi\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" }, { \"lightness\": 20 } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"geometry\", \"stylers\": [ { \"hue\": \"#f49935\" } ] }, { \"featureType\": \"road.highway\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"geometry\", \"stylers\": [ { \"hue\": \"#fad959\" } ] }, { \"featureType\": \"road.arterial\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"geometry\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"road.local\", \"elementType\": \"labels\", \"stylers\": [ { \"visibility\": \"simplified\" } ] }, { \"featureType\": \"transit\", \"elementType\": \"all\", \"stylers\": [ { \"visibility\": \"off\" } ] }, { \"featureType\": \"water\", \"elementType\": \"all\", \"stylers\": [ { \"hue\": \"#a1cdfc\" }, { \"saturation\": 30 }, { \"lightness\": 49 } ] } ]" } }, "facebookAppId": "", "headerPosition": "top", "offsetLazyLoad": "300", "baseUrl": "https:\/\/bitlabacademy.com\/wlcourses\/", "useQueryFilter": "", "pageFilters": [], "language": "", "wpmlUrlFormat": "", "multilangPlugin": "", "i18n": { "openMobileMenu": "Open mobile menu", "closeMobileMenu": "Close mobile menu" } };
-    </script>
+   
     <script src="js/bricks.min.js" id="bricks-scripts-js"></script>
     <script src="js/woocommerce.min.js" id="bricks-woocommerce-js"></script>
     <script src="js/omenubar.js" id="bricksprops-menubar-js"></script>

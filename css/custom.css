@@ -71,7 +71,7 @@
     bottom: 0px;
 }
 
-#our_services {
+#our_services, #contact_section {
     background-color: white !important;
 }
 
@@ -82,3 +82,75 @@
 
 
 /*[ === HOME PAGE STYLING END === ]*/
+
+
+
+/* [ === FREQURNTLY ASKED QUESTIONS STYLING START === ] */
+.__faq {
+    position: relative;
+}
+
+.faq_wrapper {
+    width: 100%;
+    cursor: pointer;
+}
+
+.__faq .faq_wrapper h6::before {
+    position: absolute;
+    content: '';
+
+}
+
+.__faq .faq_wrapper p {
+    font-size: 14px;
+}
+
+.rotate_svg {
+    transform: rotate(90deg);
+    transition: all;
+    duration: 200;
+}
+
+.__faq .brxe-heading.head {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+}
+
+.__faq .brxe-heading svg {
+    fill: white;
+    height: 20px;
+    width: 20px;
+}
+
+
+.contact_wrapper form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact_wrapper form button {
+    padding: 20px; 
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+    background-color: #f89432;
+}
+
+.contact_wrapper form label {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.contact_wrapper form label span {
+    color: white;
+}
+/* [ === FREQURNTLY ASKED QUESTIONS STYLING END === ] */
