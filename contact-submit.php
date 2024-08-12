@@ -36,10 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail->AltBody = "Name: $name\nEmail: $email\nMessage:\n$message";
 
     if (!$mail->send()) {
-        echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        http_response_code(500);
+        echo json_encode([
+            "message" => 'Mailer Error: ' . $mail->ErrorInfo,
+            "status" => "error"
+        ]);
     } else {
-        echo 'Message has been sent';
+        http_response_code(200);
+        echo json_encode([
+            "message" => "Message has been sent successfully",
+            "status" => "success"
+        ]);
     }
 }
 ?>

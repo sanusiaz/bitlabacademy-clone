@@ -34,4 +34,32 @@ jQuery(function ($) {
         __that.find("p").toggle()
         __that.find("svg").addClass('rotate_svg')
     })
+
+
+    $("#contact_form [type=submit]").click(function (e) {
+        let __that = $(this).parent()
+        let __data = {};
+            __data['name'] = __that.find('[name=name]').val()
+            __data['email'] = __that.find('[name=email]').val()
+            __data['message'] = __that.find('[name=message]').val()
+
+        $.ajax({
+            url: './contact-submit.php',
+            type: 'POST',
+            data: __data,
+            dataType: "json",
+
+            success: (response) => {
+                alert(response.message)
+            },
+
+            error: (err) => {
+                alert(err.responseJSON.message)
+            }
+        });
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
 })
