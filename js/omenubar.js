@@ -75,7 +75,7 @@ class MenubarNavigation {
     this.menuitems.forEach((item) => {
       // add trailing slash to href if  missing
       if (!item.href.includes("#") && item.href.slice(-1) !== "/") {
-        item.href = item.href + "/";
+        item.href = item.href ;
       }
       if (item.href === linkURL) {
         item.setAttribute("aria-current", "page");
