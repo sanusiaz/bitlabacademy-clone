@@ -19,15 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = new PHPMailer;
 
     $mail->isSMTP();
-    $mail->Host = 'smtp.example.com'; // Set the SMTP server to send through
+    $mail->Host = 'aldonasabaniene.com'; // Set the SMTP server to send through
     $mail->SMTPAuth = true;
-    $mail->Username = 'your_email@example.com'; // SMTP username
-    $mail->Password = 'your_password'; // SMTP password
+    $mail->Username = 'no-reply@aldonasabaniene.com'; // SMTP username
+    $mail->Password = 'Work@1234567890'; // SMTP password
     $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587; // TCP port to connect to
+    $mail->Port = 465; // TCP port to connect to
 
-    $mail->setFrom($email, $name);
-    $mail->addAddress('recipient@example.com'); // Add a recipient
+    $mail->setFrom($mail->Username, 'Aldonasabaniene');
+    $mail->addAddress('sanusiabdulazeezadebayo@gmail.com'); // Add a recipient
     
     $mail->isHTML(true); // Set email format to HTML
 
